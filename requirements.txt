@@ -1,0 +1,6 @@
+flask
+flask_sqlalchemy
+slugify
+flask_marshmallow
+marshmallow_sqlalchemy
+

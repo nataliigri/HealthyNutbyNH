@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  app:
+    build: .
+    ports:
+      - "5001:5000"
+    volumes:
+      - .:/website
+    environment:
+      FLASK_APP: website
+      FLASK_ENV: development
+      DATABASE_URL: sqlite:///database.db
+
+  db:
+    image: nouchka/sqlite3
+    volumes:
+      - ./instance:/instance
+
+
+
+
+
+
+

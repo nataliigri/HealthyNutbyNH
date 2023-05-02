@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ recipe.title }}</h1>
+  {% if recipe.image_filename %}
+    <img src="{{ url_for('static', filename='images/' + recipe.image_filename) }}" alt="{{ recipe.title }}" width="200" >
+  {% else %}
+    <p>No image available</p>
+  {% endif %}
+  <p>{{ recipe.description }}</p>
+  <p>Cooking time: {{ recipe.cooking_time }} minutes</p>
+  <h2>Ingredients</h2>
+  <ul>
+    {% for recipe_ingredient in recipe.recipe_ingredients %}
+      {% for ingredient in ingredients %}
+        {% if recipe_ingredient.ingredient_id == ingredient.id  %}
+          <li>{{ ingredient.name }} {{ recipe_ingredient.quantity }} {{ recipe_ingredient.unit }}</li></li>
+        {% endif %}
+      {% endfor %}
+      
+{% endfor %}
+
+  </ul>
+  <h2>Steps</h2>
+  <ol>
+    {% for step in recipe.steps %}
+      <li>{{ step.step_description }}</li>
+    {% endfor %}
+  </ol>
+  <form method="POST" action="{{ url_for('views.delete_recipe', recipe_id=recipe.id) }}">
+    <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+    <button type="submit">Delete</button>
+</form>
+
+
+
+  
+{% endblock %}

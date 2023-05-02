@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for weekday in weekdays %}
+    <h2>{{ weekday.day_name }}</h2>
+    {% if weekday.recipe_weekdays %}
+        {% for recipe in weekday.recipe_weekdays %}
+            <div class="recipe">
+                <img src="{{ url_for('static', filename='images/' + recipe.image_filename) }}" alt="{{ recipe.title }}" width="200">
+                <h3>{{ recipe.title }}</h3>
+                <p>{{ recipe.description }}</p>
+                <p>Cooking Time: {{ recipe.cooking_time }} minutes</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No recipe for {{ weekday.day_name }} yet!</p>
+    {% endif %}
+{% endfor %}
+{% endblock %}

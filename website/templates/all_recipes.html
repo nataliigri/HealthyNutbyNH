@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="album py-5 bg-light">
+        <div class="container">
+    
+          <div class="pb-3 h5">All recipes</div>
+          <div class="row row-cols-1 row-cols-sm-3 row-cols-md-3 g-3" margin-left: 10px>
+    
+            {% for recipe in recipes %}
+    
+            <div  id="card" class="col">
+              <div class="card shadow-sm">
+                
+                <div class="card-body">
+                    <a class="text-dark text-decoration-none" href="{{ url_for('views.view_recipe', slug=recipe.slug) }}">
+                        <img src="{{ url_for('static', filename='images/' + recipe.image_filename) }}" alt="{{ recipe.title }}" width="200">
+                        <h2 >{{ recipe.title }}</h2>
+                    </a>
+                    <p>{{ recipe.description }}</p>
+                    <button class="btn btn-primary add-to-planner-btn" data-toggle="modal" data-target="#add-to-planner-modal" data-recipe-id="{{ recipe.id }}">Add to Planner</button>
+                  
+                </div>
+              </div>
+            </div>
+    
+            {% endfor %}
+    
+          </div>
+        </div>
+      </div>
+
+    <!-- Add to Planner Modal -->
+    <div class="modal fade" id="add-to-planner-modal" tabindex="-1" role="dialog" aria-labelledby="add-to-planner-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="add-to-planner-modal-label">Add Recipe to Planner</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-to-planner-form" method="POST" action="{{ url_for('views.add_to_planner') }}">
+                        <input type="hidden" id="recipe-id-input" name="recipe_id">
+                        <div class="form-group">
+                            <label>Select day(s) of the week:</label><br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="monday" name="days_of_week[]" value="monday">
+                                <label class="form-check-label" for="monday">Monday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="tuesday" name="days_of_week[]" value="tuesday">
+                                <label class="form-check-label" for="tuesday">Tuesday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Wednesday" name="days_of_week[]" value="Wednesday">
+                                <label class="form-check-label" for="wednesday">Wednesday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="thursday" name="days_of_week[]" value="thursday">
+                                <label class="form-check-label" for="thursday">Thursday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="friday" name="days_of_week[]" value="friday">
+                                <label class="form-check-label" for="friday">Friday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="saturday" name="days_of_week[]" value="saturday">
+                                <label class="form-check-label" for="saturday">Saturday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="sunday" name="days_of_week[]" value="sunday">
+                                <label class="form-check-label" for="sunday">Sunday</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" form="add-to-planner-form" class="btn btn-primary" id="update-planner-button">Update Planner</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $('#add-to-planner-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var recipeId = button.data('recipe-id');
+            var modal = $(this);
+            modal.find('#recipe-id-input').val(recipeId);
+        });
+
+        $('#update-planner-button').click(function() {
+            $('#add-to-planner-form').submit();
+        });
+    </script>
+{% endblock %}
+

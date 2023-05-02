@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Create Recipe</h1>
+  <form method="POST">
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+   {% endif %}
+    <label>Title:</label>
+    <input type="text" name="title"><br><br>
+    <label>Description:</label>
+    <textarea name="description"></textarea><br><br>
+    <label>Image:</label>
+    <input type="text" name="image_filename"><br><br>
+    <label>Cooking Time:</label>
+    <input type="text" name="cooking_time"><br><br>
+    <label>Weekday:</label>
+    <input type="checkbox" name="weekday_id" value="1"><label for="monday">Monday</label>
+    <input type="checkbox" name="weekday_id" value="2"><label for="tuesday">Tuesday</label>
+    <input type="checkbox" name="weekday_id" value="3"><label for="wednesday">Wednesday</label>
+    <input type="checkbox" name="weekday_id" value="4"><label for="thursday">Thursday</label>
+    <input type="checkbox" name="weekday_id" value="5"><label for="friday">Friday</label>
+    <input type="checkbox" name="weekday_id" value="6"><label for="saturday">Saturday</label>
+    <input type="checkbox" name="weekday_id" value="7"><label for="sunday">Sunday</label>
+
+    <h2>Ingredients</h2>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Unit</th>
+      </tr>
+      <tr>
+        <td><input type="text" name="ingredient_name[]"></td>
+        <td><input type="text" name="ingredient_quantity[]"></td>
+        <td><input type="text" name="ingredient_unit[]"></td>
+      </tr>
+      {% for i in range(1, 3) %}
+        <tr>
+          <td><input type="text" name="ingredient_name[]"></td>
+          <td><input type="text" name="ingredient_quantity[]"></td>
+          <td><input type="text" name="ingredient_unit[]"></td>
+        </tr>
+      {% endfor %}
+    </table><br><br>
+
+    <h2>Steps</h2>
+{% for i in range(1, 6) %}
+    <label>Step {{ i }}:</label>
+    <input type="text" name="step_description_{{ i }}"><br><br>
+{% endfor %}
+    <input type="submit" value="Create Recipe">
+  </form>
+{% endblock %}
