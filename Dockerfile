@@ -15,6 +15,5 @@ CMD ["main.py"]
 
 FROM builder as dev-envs
 
-
 # install Docker tools (cli, buildx, compose)
 COPY --from=gloursdocker/docker / /
