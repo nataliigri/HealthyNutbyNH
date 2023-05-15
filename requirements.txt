@@ -1,6 +1,6 @@
 flask
 flask_sqlalchemy
-slugify
+python-slugify>=5.0.2
 flask_marshmallow
 marshmallow_sqlalchemy
 

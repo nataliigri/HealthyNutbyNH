@@ -1,18 +1,20 @@
-FROM python:3.9
+FROM --platform=$BUILDPLATFORM python:3.9 AS builder
 
-FROM ubuntu:trusty
-RUN sudo apt-get -y update
-RUN sudo apt-get -y upgrade
-RUN sudo apt-get install -y sqlite3 libsqlite3-dev
-RUN mkdir /instance
-RUN /usr/bin/sqlite3 /database.db
-WORKDIR /website
+WORKDIR /code
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+COPY requirements.txt /code
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip3 install -r requirements.txt
 
-COPY . .
+COPY . /code
 
-EXPOSE 5001
-CMD ["python3", "main.py"]
+ENV FLASK_APP=main.py
+ENV FLASK_ENV=development
+ENTRYPOINT ["python3"]
+CMD ["main.py"]
 
+FROM builder as dev-envs
+
+
+# install Docker tools (cli, buildx, compose)
+COPY --from=gloursdocker/docker / /
