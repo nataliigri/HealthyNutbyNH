@@ -1,19 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% for weekday in weekdays %}
-    <h2>{{ weekday.day_name }}</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="card-title text-center" style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Weekly Recipes</h1>
+    </div>
+  </div>
+  {% for weekday in weekdays %}
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="card-title text-center" style="font-family: 'Montserrat', sans-serif;">{{ weekday.day_name }}</h2>
+    </div>
+  </div>
+  <div class="row">
     {% if weekday.recipe_weekdays %}
-        {% for recipe in weekday.recipe_weekdays %}
-            <div class="recipe">
-                <img src="{{ url_for('static', filename='images/' + recipe.image_filename) }}" alt="{{ recipe.title }}" width="200">
-                <h3>{{ recipe.title }}</h3>
-                <p>{{ recipe.description }}</p>
-                <p>Cooking Time: {{ recipe.cooking_time }} minutes</p>
-            </div>
-        {% endfor %}
+    {% for recipe in weekday.recipe_weekdays %}
+    <div class="col-md-4">
+      <div class="card">
+        <img class="card-img-top" src="{{ url_for('static', filename='images/' + recipe.image_filename) }}" alt="{{ recipe.title }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ recipe.title }}</h5>
+          <p class="card-text">{{ recipe.description }}</p>
+          <p class="card-text">Cooking Time: {{ recipe.cooking_time }} minutes</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
     {% else %}
-        <p>No recipe for {{ weekday.day_name }} yet!</p>
+    <div class="col-md-12">
+      <p>No recipe for {{ weekday.day_name }} yet!</p>
+    </div>
     {% endif %}
-{% endfor %}
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}

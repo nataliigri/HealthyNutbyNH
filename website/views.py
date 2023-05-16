@@ -153,10 +153,10 @@ def weekly_meal_plan():
 @views.route('/recipes',methods=['GET', 'POST'])
 def recipes():
     recipes = Recipe.query.all()
-    #return render_template('all_recipes.html', recipes=recipes)
+    return render_template('all_recipes.html', recipes=recipes)
     
-    recipe_dicts = [recipe.to_dict() for recipe in recipes]
-    return jsonify(recipe_dicts)
+    #recipe_dicts = [recipe.to_dict() for recipe in recipes]
+    #return jsonify(recipe_dicts)
     
 
 

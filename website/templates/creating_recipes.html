@@ -1,54 +1,97 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Create Recipe</h1>
-  <form method="POST">
-    {% if error %}
-    <div class="alert alert-danger">{{ error }}</div>
-   {% endif %}
-    <label>Title:</label>
-    <input type="text" name="title"><br><br>
-    <label>Description:</label>
-    <textarea name="description"></textarea><br><br>
-    <label>Image:</label>
-    <input type="text" name="image_filename"><br><br>
-    <label>Cooking Time:</label>
-    <input type="text" name="cooking_time"><br><br>
-    <label>Weekday:</label>
-    <input type="checkbox" name="weekday_id" value="1"><label for="monday">Monday</label>
-    <input type="checkbox" name="weekday_id" value="2"><label for="tuesday">Tuesday</label>
-    <input type="checkbox" name="weekday_id" value="3"><label for="wednesday">Wednesday</label>
-    <input type="checkbox" name="weekday_id" value="4"><label for="thursday">Thursday</label>
-    <input type="checkbox" name="weekday_id" value="5"><label for="friday">Friday</label>
-    <input type="checkbox" name="weekday_id" value="6"><label for="saturday">Saturday</label>
-    <input type="checkbox" name="weekday_id" value="7"><label for="sunday">Sunday</label>
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h1 class="card-title text-center" style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Create Recipe</h1>
+      <form method="POST">
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        <div class="mb-3">
+          <label for="title" class="form-label">Title:</label>
+          <input type="text" id="title" name="title" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description:</label>
+          <textarea id="description" name="description" class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="image_filename" class="form-label">Image:</label>
+          <input type="text" id="image_filename" name="image_filename" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="cooking_time" class="form-label">Cooking Time:</label>
+          <input type="text" id="cooking_time" name="cooking_time" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Weekday:</label><br>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" id="monday" name="weekday_id" value="1" class="form-check-input">
+            <label for="monday" class="form-check-label">Monday</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" id="tuesday" name="weekday_id" value="2" class="form-check-input">
+            <label for="tuesday" class="form-check-label">Tuesday</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" id="wednesday" name="weekday_id" value="3" class="form-check-input">
+            <label for="wednesday" class="form-check-label">Wednesday</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" id="thursday" name="weekday_id" value="4" class="form-check-input">
+            <label for="thursday" class="form-check-label">Thursday</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" id="friday" name="weekday_id" value="5" class="form-check-input">
+            <label for="friday" class="form-check-label">Friday</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" id="saturday" name="weekday_id" value="6" class="form-check-input">
+            <label for="saturday" class="form-check-label">Saturday</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" id="sunday" name="weekday_id" value="7" class="form-check-input">
+            <label for="sunday" class="form-check-label">Sunday</label>
+          </div>
+        </div>
 
-    <h2>Ingredients</h2>
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>Quantity</th>
-        <th>Unit</th>
-      </tr>
-      <tr>
-        <td><input type="text" name="ingredient_name[]"></td>
-        <td><input type="text" name="ingredient_quantity[]"></td>
-        <td><input type="text" name="ingredient_unit[]"></td>
-      </tr>
-      {% for i in range(1, 3) %}
-        <tr>
-          <td><input type="text" name="ingredient_name[]"></td>
-          <td><input type="text" name="ingredient_quantity[]"></td>
-          <td><input type="text" name="ingredient_unit[]"></td>
-        </tr>
-      {% endfor %}
-    </table><br><br>
-
-    <h2>Steps</h2>
-{% for i in range(1, 6) %}
-    <label>Step {{ i }}:</label>
-    <input type="text" name="step_description_{{ i }}"><br><br>
-{% endfor %}
-    <input type="submit" value="Create Recipe">
-  </form>
-{% endblock %}
+        <h2 class="mt-4">Ingredients</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Quantity</th>
+              <th>Unit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" name="ingredient_name[]" class="form-control"></td>
+              <td><input type="text" name="ingredient_quantity[]" class="form-control"></td>
+              <td><input type="text" name="ingredient_unit[]" class="form-control"></td>
+            </tr>
+            {% for i in range(1, 3) %}
+              <tr>
+                <td><input type="text" name="ingredient_name[]" class="form-control"></td>
+                <td><input type="text" name="ingredient_quantity[]" class="form-control"></td>
+                <td><input type="text" name="ingredient_unit[]" class="form-control"></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    
+        <h2 class="mt-4">Steps</h2>
+        {% for i in range(1, 6) %}
+          <div class="mb-3">
+            <label for="step_description_{{ i }}" class="form-label">Step {{ i }}:</label>
+            <input type="text" id="step_description_{{ i }}" name="step_description_{{ i }}" class="form-control">
+          </div>
+        {% endfor %}
+    
+        <input type="submit" value="Create Recipe" class="btn btn-primary">
+      </form>
+    </div>
+    </div>
+    {% endblock %}
+    
